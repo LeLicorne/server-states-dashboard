@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trajekto-frontend
+  namespace: trajekto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trajekto-frontend
+  template:
+    metadata:
+      labels:
+        app: trajekto-frontend
+    spec:
+      serviceAccountName: vault-auth
+      containers:
+        - name: trajekto-frontend
+          image: quillws/quill-pro-trajekto-frontend-preprod:0.1.1
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: docker-registry-credentials
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trajekto-frontend
+  namespace: trajekto
+spec:
+  selector:
+    app: trajekto-frontend
+  ports:
+    - port: 80
+      targetPort: 3000

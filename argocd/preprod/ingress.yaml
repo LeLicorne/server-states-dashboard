@@ -1,0 +1,30 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: trajekto-frontend
+  namespace: trajekto
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`trajekto.quill-pro.net`)
+      services:
+        - name: trajekto-frontend
+          port: 80
+  tls:
+    secretName: trajekto-frontend-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: trajekto-frontend-cert
+  namespace: trajekto
+spec:
+  commonName: trajekto.quill-pro.net
+  secretName: trajekto-frontend-tls
+  dnsNames:
+    - trajekto.quill-pro.net
+  issuerRef:
+    kind: ClusterIssuer
+    name: prod-quill-pro

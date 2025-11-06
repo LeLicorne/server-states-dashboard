@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+# Block all bots from accessing an admin app
+# Remove if you want to allow bots to access the app
