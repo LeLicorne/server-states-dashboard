@@ -11,11 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TicketsImport } from './routes/tickets'
 import { Route as ProtectedImport } from './routes/_protected'
 import { Route as IndexImport } from './routes/index'
 import { Route as ProtectedAccountImport } from './routes/_protected/account'
 
 // Create/Update Routes
+
+const TicketsRoute = TicketsImport.update({
+  path: '/tickets',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ProtectedRoute = ProtectedImport.update({
   id: '/_protected',
@@ -44,6 +50,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedImport
       parentRoute: typeof rootRoute
     }
+    '/tickets': {
+      preLoaderRoute: typeof TicketsImport
+      parentRoute: typeof rootRoute
+    }
     '/_protected/account': {
       preLoaderRoute: typeof ProtectedAccountImport
       parentRoute: typeof ProtectedImport
@@ -56,6 +66,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   ProtectedRoute.addChildren([ProtectedAccountRoute]),
+  TicketsRoute,
 ])
 
 /* prettier-ignore-end */
