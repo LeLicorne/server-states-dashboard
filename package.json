@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "set-admin-claim": "node scripts/set-admin-claim.mjs",
+    "set-admin-claim": "node scripts/set-admin-claim.js",
     "commitlint": "commitlint --edit",
     "format": "prettier --ignore-path .prettierignore --ignore-path .gitignore --check \"**/*.+(js|json|ts|tsx)\"",
     "format:fix": "prettier --ignore-path .prettierignore --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\"",
