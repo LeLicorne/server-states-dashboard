@@ -58,4 +58,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository_owner }}-${{ github.event.repository.name }}-preprod:${{ github.ref_name }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/lelicorne-server-states-dashboard-preprod:${{ github.ref_name }}
