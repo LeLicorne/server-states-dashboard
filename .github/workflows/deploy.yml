@@ -54,9 +54,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Prepare Docker metadata
+        run: |
+          echo "DOCKER_IMAGE=$(echo '${{ secrets.DOCKER_USERNAME }}/${{ github.repository_owner }}-${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ github.repository_owner }}-${{ github.event.repository.name }}:${{ github.ref_name }}
+          tags: ${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}
