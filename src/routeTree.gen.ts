@@ -11,20 +11,33 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as ProtectedImport } from './routes/_protected'
-import { Route as IndexImport } from './routes/index'
+import { Route as ProtectedIndexImport } from './routes/_protected/index'
+import { Route as ProtectedTicketsImport } from './routes/_protected/tickets'
 import { Route as ProtectedAccountImport } from './routes/_protected/account'
+import { Route as ProtectedAdminUsersImport } from './routes/_protected/admin/users'
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const ProtectedRoute = ProtectedImport.update({
   id: '/_protected',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const ProtectedIndexRoute = ProtectedIndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
+const ProtectedTicketsRoute = ProtectedTicketsImport.update({
+  path: '/tickets',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 
 const ProtectedAccountRoute = ProtectedAccountImport.update({
@@ -32,20 +45,37 @@ const ProtectedAccountRoute = ProtectedAccountImport.update({
   getParentRoute: () => ProtectedRoute,
 } as any)
 
+const ProtectedAdminUsersRoute = ProtectedAdminUsersImport.update({
+  path: '/admin/users',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
     '/_protected': {
       preLoaderRoute: typeof ProtectedImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/_protected/account': {
       preLoaderRoute: typeof ProtectedAccountImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/tickets': {
+      preLoaderRoute: typeof ProtectedTicketsImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/': {
+      preLoaderRoute: typeof ProtectedIndexImport
+      parentRoute: typeof ProtectedImport
+    }
+    '/_protected/admin/users': {
+      preLoaderRoute: typeof ProtectedAdminUsersImport
       parentRoute: typeof ProtectedImport
     }
   }
@@ -54,8 +84,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  IndexRoute,
-  ProtectedRoute.addChildren([ProtectedAccountRoute]),
+  ProtectedRoute.addChildren([
+    ProtectedAccountRoute,
+    ProtectedTicketsRoute,
+    ProtectedIndexRoute,
+    ProtectedAdminUsersRoute,
+  ]),
+  LoginRoute,
 ])
 
 /* prettier-ignore-end */

@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage'; // defaults to localStorage for
 
 import rootReducer from './reducers';
 import { apiSlice } from './services/api';
+import { zabbixApi } from './services/zabbix';
 
 const persistConfig = {
   key: 'root',
@@ -30,12 +31,11 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(apiSlice.middleware),
+    }).concat(apiSlice.middleware, zabbixApi.middleware),
 });
 
 const persistor = persistStore(store);
 
 export { persistor, store };
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
