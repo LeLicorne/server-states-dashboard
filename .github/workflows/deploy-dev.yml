@@ -53,9 +53,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Prepare Docker metadata
+        run: |
+          echo "DOCKER_IMAGE=$(echo '${{ secrets.DOCKER_USERNAME }}/lelicorne-server-states-dashboard-preprod' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build and Push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/lelicorne-server-states-dashboard-preprod:${{ github.ref_name }}
+          tags: ${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}
