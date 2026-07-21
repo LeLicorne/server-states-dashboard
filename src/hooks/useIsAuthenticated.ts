@@ -1,9 +1,7 @@
-import { store } from '@/redux/store';
+import { useAppSelector } from './useAppSelector';
 
 const useIsAuthenticated = () => {
-  const states = store.getState();
-  const access = states.auth.access;
-  const active = states.auth.active;
+  const { access, active } = useAppSelector((state) => state.auth);
   if (access && active) {
     return true;
   }
