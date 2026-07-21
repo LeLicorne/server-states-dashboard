@@ -29,19 +29,25 @@ export function useDarkMode(): { mode: ModeType; isDarkMode: boolean; toggleMode
 
   const isDarkMode = mode === 'dark' || (mode === 'auto' && prefersDarkScheme.matches);
 
-  prefersDarkScheme.addEventListener('change', (e) => {
-    if (mode === 'auto') {
-      document.documentElement.classList.toggle('dark', e.matches);
-    }
-  });
-
   useEffect(() => {
+    const handleSystemModeChange = (event: MediaQueryListEvent) => {
+      if (mode === 'auto') {
+        document.documentElement.classList.toggle('dark', event.matches);
+      }
+    };
+
     if (mode === 'auto') {
       const darkOS = prefersDarkScheme.matches;
       document.documentElement.classList.toggle('dark', darkOS);
     } else {
       document.documentElement.classList.toggle('dark', mode === 'dark');
     }
+
+    prefersDarkScheme.addEventListener('change', handleSystemModeChange);
+
+    return () => {
+      prefersDarkScheme.removeEventListener('change', handleSystemModeChange);
+    };
   }, [mode, prefersDarkScheme, dispatch]);
 
   return { mode, isDarkMode, toggleMode };
