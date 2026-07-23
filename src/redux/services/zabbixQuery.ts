@@ -44,6 +44,18 @@ export const zabbixEndpoints = zabbixApi.injectEndpoints({
       }),
     }),
 
+    // Fetches value_type so callers can pick the correct `history` bucket
+    // for history.get instead of hardcoding/guessing 0 (float) vs 3 (unsigned) etc.
+    getItemsMeta: builder.query<ZabbixItem[], string[]>({
+      query: (itemIds) => ({
+        method: 'item.get',
+        params: {
+          output: ['itemid', 'hostid', 'name', 'key_', 'value_type'],
+          itemids: itemIds,
+        },
+      }),
+    }),
+
     getItemHistory: builder.query<ZabbixHistoryPoint[], GetItemHistoryArgs>({
       query: ({ itemId, historyType = 0, timeFrom, limit = 100 }) => ({
         method: 'history.get',
@@ -61,5 +73,10 @@ export const zabbixEndpoints = zabbixApi.injectEndpoints({
   }),
 });
 
-export const { useGetHostsQuery, useGetProblemsQuery, useGetItemsQuery, useGetItemHistoryQuery } =
-  zabbixEndpoints;
+export const {
+  useGetHostsQuery,
+  useGetProblemsQuery,
+  useGetItemsQuery,
+  useGetItemsMetaQuery,
+  useGetItemHistoryQuery,
+} = zabbixEndpoints;

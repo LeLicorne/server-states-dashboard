@@ -34,8 +34,9 @@ export interface ZabbixItem {
   hostid: string;
   name: string;
   key_: string;
-  lastvalue: string;
-  units: string;
+  lastvalue?: string;
+  units?: string;
+  value_type?: number;
 }
 
 export interface ZabbixHistoryPoint {
@@ -47,7 +48,7 @@ export interface ZabbixHistoryPoint {
 export interface GetItemHistoryArgs {
   itemId: string;
   /** Zabbix value_type for this item: 0=float, 1=character, 2=log, 3=unsigned int, 4=text */
-  historyType?: 0 | 1 | 2 | 3 | 4;
+  historyType?: number;
   timeFrom?: number;
   limit?: number;
 }

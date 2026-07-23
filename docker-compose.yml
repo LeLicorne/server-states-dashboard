@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  # Site
+  # Site (démarré par deploy.sh une fois le .env généré)
   site:
     build:
       context: .
