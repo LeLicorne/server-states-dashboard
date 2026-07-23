@@ -33,16 +33,13 @@ const waitForAuthState = async () =>
   });
 
 export const getUserProfileByUid = async (uid: string): Promise<UserProfile | null> => {
-  console.log('[getUserProfileByUid] Fetching profile for uid:', uid);
   const snapshot = await getDoc(doc(db, 'users', uid));
 
   if (!snapshot.exists()) {
-    console.log('[getUserProfileByUid] User document does not exist');
     return null;
   }
 
   const data = snapshot.data() as Partial<UserProfile>;
-  console.log('[getUserProfileByUid] Raw Firestore data:', data);
 
   const profile = {
     uid,
@@ -53,7 +50,6 @@ export const getUserProfileByUid = async (uid: string): Promise<UserProfile | nu
     updatedAt: data.updatedAt,
   };
 
-  console.log('[getUserProfileByUid] Processed profile:', profile);
   return profile;
 };
 
@@ -68,18 +64,14 @@ export const requireFirestoreSession = async ({
   requireAdmin?: boolean;
 } = {}) => {
   const session = store.getState().auth;
-  console.log('[requireFirestoreSession] Session state:', session);
-  console.log('[requireFirestoreSession] Require admin?', requireAdmin);
 
   if (!session.access || !session.uid) {
-    console.log('[requireFirestoreSession] ❌ Missing access token or uid');
     throw redirect({ to: '/login' });
   }
 
   await waitForAuthState();
 
   if (!auth.currentUser || auth.currentUser.uid !== session.uid) {
-    console.log('[requireFirestoreSession] ❌ Firebase auth user not ready or mismatched');
     await invalidateSession();
     throw redirect({ to: '/login' });
   }
@@ -88,23 +80,18 @@ export const requireFirestoreSession = async ({
   try {
     profile = await getUserProfileByUid(session.uid);
   } catch (error) {
-    console.log('[requireFirestoreSession] ❌ Failed to fetch profile:', error);
     await invalidateSession();
     throw redirect({ to: '/login' });
   }
-  console.log('[requireFirestoreSession] Retrieved profile:', profile);
 
   if (!profile || !profile.active) {
-    console.log('[requireFirestoreSession] ❌ Profile missing or inactive:', profile);
     await invalidateSession();
     throw redirect({ to: '/login' });
   }
 
   if (requireAdmin && !profile.isAdmin) {
-    console.log('[requireFirestoreSession] ❌ Admin required but user is not admin');
     throw redirect({ to: '/' });
   }
 
-  console.log('[requireFirestoreSession] ✅ Authorization passed');
   return profile;
 };
