@@ -226,8 +226,8 @@ const AdminUsersPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+    <div className="min-h-screen bg-slate-50 px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 sm:gap-8">
         <header className="space-y-3">
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-3xl font-bold text-slate-900">User Management</h1>
@@ -244,7 +244,7 @@ const AdminUsersPage: React.FC = () => {
             onSubmit={(event) => {
               void handleSubmit(event);
             }}
-            className="flex h-fit flex-col gap-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
+            className="flex h-fit flex-col gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-6"
           >
             <div className="space-y-1">
               <h2 className="text-lg font-semibold text-slate-900">
@@ -277,26 +277,26 @@ const AdminUsersPage: React.FC = () => {
               copying.
             </p>
 
-            <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+            <label className="flex min-h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700">
               <input
                 type="checkbox"
                 checked={form.isAdmin}
                 onChange={(event) =>
                   setForm((current) => ({ ...current, isAdmin: event.target.checked }))
                 }
-                className="size-4 rounded border-slate-300"
+                className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
               />
               Admin
             </label>
 
-            <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+            <label className="flex min-h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 text-sm font-medium text-slate-700">
               <input
                 type="checkbox"
                 checked={form.active}
                 onChange={(event) =>
                   setForm((current) => ({ ...current, active: event.target.checked }))
                 }
-                className="size-4 rounded border-slate-300"
+                className="size-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
               />
               Active
             </label>
@@ -342,7 +342,7 @@ const AdminUsersPage: React.FC = () => {
             </div>
           </form>
 
-          <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-6">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Current users</h2>

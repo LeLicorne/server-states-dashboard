@@ -248,8 +248,8 @@ const TicketPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
+    <div className="min-h-screen bg-slate-50 px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 sm:gap-8">
         <header className="space-y-3">
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-3xl font-bold text-slate-900">Tickets</h1>
@@ -279,7 +279,7 @@ const TicketPage: React.FC = () => {
             onSubmit={(event) => {
               void handleSubmit(event);
             }}
-            className="flex h-fit flex-col gap-4 rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200"
+            className="flex h-fit flex-col gap-4 rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-6"
           >
             <div className="space-y-1">
               <h2 className="text-lg font-semibold text-slate-900">
@@ -298,7 +298,7 @@ const TicketPage: React.FC = () => {
               className="w-full"
             />
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1.5">
               <label htmlFor="ticket-description" className="text-sm font-medium text-slate-700">
                 Description
               </label>
@@ -309,7 +309,7 @@ const TicketPage: React.FC = () => {
                   setForm((current) => ({ ...current, description: event.target.value }))
                 }
                 rows={4}
-                className="rounded-md border border-gray-300 p-2"
+                className="min-h-28 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 placeholder="Describe the work, the impact, and the current status."
               />
             </div>
@@ -325,7 +325,7 @@ const TicketPage: React.FC = () => {
                       status: event.target.value as TicketStatus,
                     }))
                   }
-                  className="rounded-md border border-gray-300 p-2"
+                  className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   {statusOrder.map((status) => (
                     <option key={status} value={status}>
@@ -345,7 +345,7 @@ const TicketPage: React.FC = () => {
                       priority: event.target.value as TicketPriority,
                     }))
                   }
-                  className="rounded-md border border-gray-300 p-2"
+                  className="min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   {Object.entries(priorityLabels).map(([priority, meta]) => (
                     <option key={priority} value={priority}>
@@ -377,7 +377,7 @@ const TicketPage: React.FC = () => {
               placeHolder="PostgreSQL"
             />
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 pt-1">
               <Button
                 type="submit"
                 label={saving ? 'Saving...' : editingId ? 'Update ticket' : 'Add ticket'}
@@ -395,7 +395,7 @@ const TicketPage: React.FC = () => {
             </div>
           </form>
 
-          <section className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <section className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:p-6">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-slate-900">Ticket list</h2>
@@ -405,8 +405,8 @@ const TicketPage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                <label className="flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-600">
+              <div className="grid w-full gap-2 sm:w-auto sm:grid-cols-2 lg:flex lg:flex-wrap">
+                <label className="flex min-h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
                   Status
                   <select
                     value={filters.status}
@@ -416,7 +416,7 @@ const TicketPage: React.FC = () => {
                         status: event.target.value as TicketStatus | 'all',
                       }))
                     }
-                    className="bg-transparent text-slate-900 outline-none"
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none"
                   >
                     <option value="all">All</option>
                     {statusOrder.map((status) => (
@@ -427,7 +427,7 @@ const TicketPage: React.FC = () => {
                   </select>
                 </label>
 
-                <label className="flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-600">
+                <label className="flex min-h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-600">
                   Priority
                   <select
                     value={filters.priority}
@@ -437,7 +437,7 @@ const TicketPage: React.FC = () => {
                         priority: event.target.value as TicketPriority | 'all',
                       }))
                     }
-                    className="bg-transparent text-slate-900 outline-none"
+                    className="w-full bg-transparent text-sm text-slate-900 outline-none"
                   >
                     <option value="all">All</option>
                     {Object.entries(priorityLabels).map(([priority, meta]) => (
@@ -453,7 +453,7 @@ const TicketPage: React.FC = () => {
                   value={filters.query}
                   onChange={(value) => setFilters((current) => ({ ...current, query: value }))}
                   placeHolder="Search tickets"
-                  className="min-w-56"
+                  className="w-full min-w-0 sm:min-w-56"
                 />
 
                 <Button

@@ -24,15 +24,18 @@ const TextInput: React.FC<TextInputProps> = ({
   inputClassName,
 }) => {
   return (
-    <div className={cn('flex flex-1 flex-col gap-1', className)}>
-      <label>{label}</label>
+    <div className={cn('flex w-full flex-col gap-1.5', className)}>
+      <label className="text-sm font-medium text-slate-700">{label}</label>
       <input
         type={secure ? 'password' : 'text'}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeHolder}
         disabled={disabled}
-        className={cn('rounded-md border border-gray-300 p-2', inputClassName)}
+        className={cn(
+          'min-h-11 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:bg-slate-100',
+          inputClassName
+        )}
       />
     </div>
   );

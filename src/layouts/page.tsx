@@ -9,21 +9,22 @@ const Page: React.FC = (): FunctionComponent => {
   const isExpanded = useAppSelector((state) => state.navbar.isExpanded);
   const access = useAppSelector((state) => state.auth.access);
   const active = useAppSelector((state) => state.auth.active);
+  const showNavigation = Boolean(access && active);
 
   return (
     <main className="flex min-h-screen flex-col md:flex-row">
-      {access && active && <NavBar />}
-      {access && active && (
+      {showNavigation && <NavBar />}
+      {showNavigation && (
         <div
           className={cn(
             'shrink-0 transition-all duration-500 ease-in-out',
-            'size-16 md:h-screen',
+            'hidden md:block md:h-screen',
             isExpanded ? 'md:w-52' : 'md:w-16'
           )}
         />
       )}
 
-      <div className="w-full">
+      <div className={cn('w-full', showNavigation && 'pb-20 md:pb-0')}>
         <Outlet />
       </div>
     </main>

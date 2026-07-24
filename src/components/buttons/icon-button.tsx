@@ -6,15 +6,17 @@ interface IconButtonProps {
   icon: React.ReactNode;
   label?: string;
   onClick: () => void;
+  active?: boolean;
   className?: string;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ icon, label, onClick, className }) => {
+const IconButton: React.FC<IconButtonProps> = ({ icon, label, onClick, active, className }) => {
   return (
     <button
       onClick={onClick}
       className={cn(
-        'flex flex-row items-center rounded-md p-2 transition-all hover:bg-gray-200 overflow-hidden',
+        'flex min-h-10 flex-row items-center overflow-hidden rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition-all hover:bg-slate-100',
+        active && 'bg-slate-900 text-white hover:bg-slate-900/90',
         className
       )}
     >

@@ -89,7 +89,7 @@ const Login: React.FC = () => {
         onSubmit={(event) => {
           void handleSubmit(event);
         }}
-        className="flex w-full max-w-md flex-col gap-6 rounded-xl bg-white p-8 shadow-lg ring-1 ring-slate-200"
+        className="flex w-full max-w-md flex-col gap-6 rounded-xl bg-white p-6 shadow-lg ring-1 ring-slate-200 sm:p-8"
       >
         <div className="space-y-2 text-center">
           <h2 className="text-2xl font-bold text-slate-900">Login</h2>
