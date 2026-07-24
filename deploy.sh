@@ -74,6 +74,11 @@ done
 [ -n "$CPU_ID" ] && [ -n "$MEM_ID" ] || { echo "CPU/memory items not found — check CPU_KEY/MEM_KEY/TEMPLATE_NAME"; exit 1; }
 
 echo "==> Writing .env"
+if [ -z "$API_TOKEN" ] || [ "$API_TOKEN" = "null" ]; then
+  echo "ERROR: failed to obtain a valid Zabbix API token (got: '$API_TOKEN')."
+  echo "Check Zabbix Admin login/password-change state and re-run."
+  exit 1
+fi
 touch .env
 grep -v '^VITE_ZABBIX_' .env > .env.tmp || true
 cat >> .env.tmp <<EOF
