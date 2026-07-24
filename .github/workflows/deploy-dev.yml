@@ -4,18 +4,18 @@ name: Build and Deploy React App via Docker
 # a VPS. It will also set up an OpenVPN connection to the VPS.
 #
 #  -------------------------- /!\ Important Notes /!\ --------------------------
-# 
+#
 # - The Docker container will be named based on the format:
 #   `${{ github.repository_owner }}-${{ github.event.repository.name }}-container`.
 # - There is an Apache2 VHost behind the VPS's associated domains that will
 #   reverse proxy to the Docker container.
-# - There is also a systemd service that will restart the Docker container if 
+# - There is also a systemd service that will restart the Docker container if
 #   it crashes.
 #
 # So any update on application ports must be reflected in the VHost and
 # systemd service configuration files.
 #  --------------------------- /!\ Required Creds /!\ --------------------------
-# 
+#
 # - DOCKER_USERNAME: Docker Hub username
 # - DOCKER_PASSWORD: Docker Hub password
 # - OPENVPN_USERNAME: OpenVPN username
@@ -31,7 +31,7 @@ name: Build and Deploy React App via Docker
 on:
   push:
     tags:
-      - '*.*.*'
+      - "*.*.*"
 
 jobs:
   build:
@@ -62,4 +62,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}
+          tags: |
+            ${{ env.DOCKER_IMAGE }}:${{ github.ref_name }}
+            ${{ env.DOCKER_IMAGE }}:latest
