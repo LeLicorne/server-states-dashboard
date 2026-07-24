@@ -453,7 +453,7 @@ const TicketPage: React.FC = () => {
                   value={filters.query}
                   onChange={(value) => setFilters((current) => ({ ...current, query: value }))}
                   placeHolder="Search tickets"
-                  className="w-full min-w-0 sm:min-w-56"
+                  className="w-full min-w-0"
                 />
 
                 <Button

@@ -356,65 +356,118 @@ const AdminUsersPage: React.FC = () => {
             ) : users.length === 0 ? (
               <p className="text-sm text-slate-500">No user profiles found yet.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
-                  <thead className="text-xs uppercase tracking-wide text-slate-500">
-                    <tr>
-                      <th className="px-4 py-3">User</th>
-                      <th className="px-4 py-3">Role</th>
-                      <th className="px-4 py-3">Status</th>
-                      <th className="px-4 py-3">Updated</th>
-                      <th className="px-4 py-3">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {users.map((user) => (
-                      <tr key={user.id} className="align-top">
-                        <td className="p-4">
-                          <div className="space-y-1">
-                            <p className="text-slate-500">{user.email}</p>
-                            <p className="text-xs text-slate-400">UID: {user.uid ?? user.id}</p>
-                          </div>
-                        </td>
-                        <td className="p-4">
-                          <Tag
-                            color={user.isAdmin ? 'blue' : 'gray'}
-                            label={user.isAdmin ? 'Admin' : 'Member'}
-                          />
-                        </td>
-                        <td className="p-4">
-                          <Tag
-                            color={user.active ? 'green' : 'red'}
-                            label={user.active ? 'Active' : 'Inactive'}
-                          />
-                        </td>
-                        <td className="p-4 text-slate-500">
-                          {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : '-'}
-                        </td>
-                        <td className="p-4">
-                          <div className="flex flex-wrap gap-2">
-                            <Button
-                              type="button"
-                              label="Edit"
-                              variant="secondary"
-                              onClick={() => handleEdit(user)}
-                            />
-                            <Button
-                              type="button"
-                              label="Delete"
-                              variant="danger"
-                              onClick={() => {
-                                void handleDelete(user.id);
-                              }}
-                              disabled={saving}
-                            />
-                          </div>
-                        </td>
+              <>
+                <div className="grid gap-3 md:hidden">
+                  {users.map((user) => (
+                    <article
+                      key={user.id}
+                      className="rounded-lg border border-slate-200 bg-slate-50 p-4"
+                    >
+                      <div className="space-y-1">
+                        <p className="break-all text-sm font-medium text-slate-900">{user.email}</p>
+                        <p className="break-all text-xs text-slate-500">
+                          UID: {user.uid ?? user.id}
+                        </p>
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <Tag
+                          color={user.isAdmin ? 'blue' : 'gray'}
+                          label={user.isAdmin ? 'Admin' : 'Member'}
+                        />
+                        <Tag
+                          color={user.active ? 'green' : 'red'}
+                          label={user.active ? 'Active' : 'Inactive'}
+                        />
+                      </div>
+
+                      <p className="mt-3 text-xs text-slate-500">
+                        Updated: {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : '-'}
+                      </p>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <Button
+                          type="button"
+                          label="Edit"
+                          variant="secondary"
+                          onClick={() => handleEdit(user)}
+                        />
+                        <Button
+                          type="button"
+                          label="Delete"
+                          variant="danger"
+                          onClick={() => {
+                            void handleDelete(user.id);
+                          }}
+                          disabled={saving}
+                        />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="hidden overflow-x-auto md:block">
+                  <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+                    <thead className="text-xs uppercase tracking-wide text-slate-500">
+                      <tr>
+                        <th className="px-4 py-3">User</th>
+                        <th className="px-4 py-3">Role</th>
+                        <th className="px-4 py-3">Status</th>
+                        <th className="px-4 py-3">Updated</th>
+                        <th className="px-4 py-3">Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {users.map((user) => (
+                        <tr key={user.id} className="align-top">
+                          <td className="p-4">
+                            <div className="space-y-1">
+                              <p className="break-all text-slate-500">{user.email}</p>
+                              <p className="break-all text-xs text-slate-400">
+                                UID: {user.uid ?? user.id}
+                              </p>
+                            </div>
+                          </td>
+                          <td className="p-4">
+                            <Tag
+                              color={user.isAdmin ? 'blue' : 'gray'}
+                              label={user.isAdmin ? 'Admin' : 'Member'}
+                            />
+                          </td>
+                          <td className="p-4">
+                            <Tag
+                              color={user.active ? 'green' : 'red'}
+                              label={user.active ? 'Active' : 'Inactive'}
+                            />
+                          </td>
+                          <td className="p-4 text-slate-500">
+                            {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : '-'}
+                          </td>
+                          <td className="p-4">
+                            <div className="flex flex-wrap gap-2">
+                              <Button
+                                type="button"
+                                label="Edit"
+                                variant="secondary"
+                                onClick={() => handleEdit(user)}
+                              />
+                              <Button
+                                type="button"
+                                label="Delete"
+                                variant="danger"
+                                onClick={() => {
+                                  void handleDelete(user.id);
+                                }}
+                                disabled={saving}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
             )}
           </div>
         </section>

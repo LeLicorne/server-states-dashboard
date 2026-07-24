@@ -27,7 +27,7 @@ const Tag: React.FC<TagProps> = ({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-x-1 rounded-full px-2 py-0.5 text-xs font-medium text-nowrap',
+        'inline-flex max-w-full items-center gap-x-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap',
         colors[color],
         className
       )}

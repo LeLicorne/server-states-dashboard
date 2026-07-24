@@ -12,7 +12,7 @@ const Page: React.FC = (): FunctionComponent => {
   const showNavigation = Boolean(access && active);
 
   return (
-    <main className="flex min-h-screen flex-col md:flex-row">
+    <main className="flex min-h-screen max-w-full flex-col overflow-x-clip md:flex-row">
       {showNavigation && <NavBar />}
       {showNavigation && (
         <div
@@ -24,7 +24,7 @@ const Page: React.FC = (): FunctionComponent => {
         />
       )}
 
-      <div className={cn('w-full', showNavigation && 'pb-20 md:pb-0')}>
+      <div className={cn('min-w-0 w-full', showNavigation && 'pb-20 md:pb-0')}>
         <Outlet />
       </div>
     </main>
